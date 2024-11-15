@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:isnta_clone/body.dart';
 
 void main() {
-  runApp(const InstaCloneApp());
+  runApp(const InstagramCloneApp());
 }
 
-class InstaCloneApp extends StatelessWidget {
-  const InstaCloneApp({super.key});
+class InstagramCloneApp extends StatelessWidget {
+  const InstagramCloneApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,26 +24,34 @@ class InstaCloneApp extends StatelessWidget {
             selectedItemColor: Colors.black,
           ),
           useMaterial3: true),
-      home: const InstaCloneHome(),
+      home: const InstagramCloneHome(),
     );
   }
 }
 
-class InstaCloneHome extends StatefulWidget {
-  const InstaCloneHome({super.key});
+class InstagramCloneHome extends StatefulWidget {
+  const InstagramCloneHome({super.key});
 
   @override
-  State<InstaCloneHome> createState() => _InstaCloneHomeState();
+  State<InstagramCloneHome> createState() => _InstagramCloneHomeState();
 }
 
-class _InstaCloneHomeState extends State<InstaCloneHome> {
+class _InstagramCloneHomeState extends State<InstagramCloneHome> {
+  late int index;
+
+  @override
+  void initState() {
+    super.initState();
+    index = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: index == 0 ? AppBar(
         title: Text(
           'Instagram',
-          style: GoogleFonts.lobsterTwo(fontSize: 24),
+          style: GoogleFonts.lobsterTwo(fontSize: 30),
         ),
         centerTitle: false,
         actions: [
@@ -58,12 +66,16 @@ class _InstaCloneHomeState extends State<InstaCloneHome> {
             onPressed: () {},
           ),
         ],
-      ),
-      body: const InstaBody(),
+      ) : null,
+      body: InstagramBody(index: index),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: 28), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search, size: 28), label: 'Search'),
+        currentIndex: index,
+        onTap: (newIndex) => setState(() => index = newIndex),
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home, size: 28), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search, size: 28), label: 'Search'),
         ],
       ),
     );
